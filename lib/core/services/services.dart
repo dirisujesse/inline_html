@@ -1,0 +1,1 @@
+export 'ipc/ipc.dart';
