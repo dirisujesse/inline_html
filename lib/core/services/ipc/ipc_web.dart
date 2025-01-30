@@ -1,6 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
-import 'dart:ui_web' as webUi;
+import 'dart:ui_web' as ui;
 
 import 'package:inline_html/core/services/ipc/ipc_plugin.dart';
 import 'package:inline_html/inline_html.dart';
@@ -29,12 +29,14 @@ class IpcPluginWeb extends IpcPlugin {
   @override
   dynamic createImageElement() {
     try {
-      webUi.platformViewRegistry.registerViewFactory(
+      ui.platformViewRegistry.registerViewFactory(
         imageElement,
         (int viewId, {Object? params}) {
           final ImageElement image = ImageElement()
             ..id = imageElementId
             ..style.display = "none"
+            ..style.objectFit = "cover"
+            ..style.borderRadius = "12px"
             ..style.width = '100%'
             ..style.height = '100%';
           return image;
