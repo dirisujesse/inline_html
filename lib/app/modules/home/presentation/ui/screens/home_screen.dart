@@ -11,8 +11,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with HomeMixin {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
-      appBar: AppBar(),
+      key: scaffoldKey,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
         child: Column(
@@ -48,9 +49,13 @@ class _HomeScreenState extends State<HomeScreen> with HomeMixin {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        child: Icon(Icons.add),
+      floatingActionButton: HomeContextMenu(
+        onPresented: dimBody,
+        onSelect: toggleFullScreen,
+        child: FloatingActionButton(
+            onPressed: null,
+            child: Icon(Icons.add),
+          ),
       ),
     );
   }

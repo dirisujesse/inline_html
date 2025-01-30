@@ -18,8 +18,11 @@ class IpcPluginWeb extends IpcPlugin {
 
     fullscreen ??= !_hasFullScreenElement;
 
-    if (fullscreen) document.documentElement?.requestFullscreen();
-    document.exitFullscreen();
+    if (fullscreen) {
+      document.documentElement?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
 
     onModified?.call(_hasFullScreenElement);
   }
@@ -60,7 +63,7 @@ class IpcPluginWeb extends IpcPlugin {
       image.style.display = "none";
       return;
     }
-    
+
     image.src = url;
     image.style.display = "inline-block";
 

@@ -4,10 +4,10 @@ import 'package:inline_html/inline_html.dart';
 
 mixin HomeMixin<T extends HomeScreen> on State<T> {
   late final ValueNotifier<bool> formStateEmitter;
-  late final ValueNotifier<bool> inFullScreen;
 
-  ///Key
+  ///Keys
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   //Controller
   late final TextEditingController urlCtrl;
@@ -19,7 +19,6 @@ mixin HomeMixin<T extends HomeScreen> on State<T> {
     IpcPlugin.instance.createImageElement();
 
     urlCtrl = TextEditingController();
-    inFullScreen = ValueNotifier(false);
 
     _trackValidity();
 
@@ -35,10 +34,17 @@ mixin HomeMixin<T extends HomeScreen> on State<T> {
     super.dispose();
   }
 
-  toggleFullScreen() {
-    IpcPlugin.instance.modifyWindowDisplay(onModified: (value) {
-      inFullScreen.value = value;
-    });
+  dimBody(bool yes) {
+    scaffoldKey.currentState?.showBodyScrim(yes, 0.2);
+  }
+
+  toggleFullScreen([bool? fullscreen]) {
+    IpcPlugin.instance.modifyWindowDisplay(
+      fullscreen: fullscreen,
+      onModified: (value) {
+        dimBody(false);
+      },
+    );
   }
 
   _trackValidity() {
